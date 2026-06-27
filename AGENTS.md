@@ -107,8 +107,7 @@ Help the user think better and write production-ready code. Optimize for clearer
   - `npm test`
   - `npm run test:e2e` for Playwright-covered user flows
 - If the repo uses `pnpm`, `yarn`, or `bun` instead of `npm`, use the package manager already present in lockfiles and scripts.
-- Do not run Python-specific tooling such as Ruff or mypy unless a Python component is explicitly introduced.
-- After significant changes in an initialized app, update the appropriate project version file, normally `package.json`, using semantic versioning. Do not reference `pyproject.toml` unless this repository actually adds one.
+- After significant changes in an initialized app, update the appropriate project version file, normally `package.json`, using semantic versioning.
 
 ## Documentation
 

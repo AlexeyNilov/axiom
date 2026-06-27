@@ -104,7 +104,7 @@ been introduced yet.
 * `docs/knowledge-graph.md` - node types, edge types and graph flow.
 * `docs/roadmap.md` - phased delivery plan from core domain to plugin
   ecosystem.
-* `docs/engineering-principles.md.` - engineering guardrails against
+* `docs/engineering-principles.md` - engineering guardrails against
   architectural drift.
 
 ### Specifications
