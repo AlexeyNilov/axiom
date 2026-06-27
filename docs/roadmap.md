@@ -39,7 +39,7 @@ Status: implemented as a persisted workflow-first MVP shell.
 Scope:
 
 - Prisma persistence over SQLite behind repository interfaces.
-- Seeded starter artwork: Wassily Kandinsky, Composition VIII.
+- Seeded starter artworks with homepage selection.
 - Clean artwork media fields:
   renderable image URL, image page URL and source record URL remain distinct.
 - Next.js presentation for the guided workflow instead of generic CRUD screens.

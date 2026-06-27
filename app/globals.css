@@ -111,13 +111,6 @@ label {
   padding-top: 1.5rem;
 }
 
-.artwork-header {
-  display: grid;
-  grid-template-columns: minmax(260px, 42%) 1fr;
-  gap: 1.5rem;
-  align-items: start;
-}
-
 .study-layout {
   display: grid;
   grid-template-columns: minmax(420px, 44vw) minmax(560px, 1fr);
@@ -157,6 +150,43 @@ label {
 
 .artwork-reference-image {
   max-height: min(72vh, 820px);
+}
+
+.artwork-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.artwork-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.artwork-card-image {
+  border-width: 0 0 1px;
+  border-radius: 0;
+}
+
+.artwork-card-placeholder {
+  display: grid;
+  place-items: center;
+  border-width: 0 0 1px;
+  border-radius: 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.artwork-card-body {
+  display: grid;
+  align-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .artwork-links {
@@ -276,7 +306,6 @@ p {
 }
 
 @media (max-width: 760px) {
-  .artwork-header,
   .study-layout,
   .grid {
     grid-template-columns: 1fr;

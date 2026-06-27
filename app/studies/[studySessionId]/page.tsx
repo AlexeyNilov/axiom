@@ -56,6 +56,8 @@ export default async function StudyPage({ params }: PageProps) {
               className="artwork-image artwork-reference-image"
               src={artwork.imageUrl}
               alt={`${artwork.title} by ${artwork.artist ?? "unknown artist"}`}
+              decoding="async"
+              loading="lazy"
             />
           ) : null}
           <div className="artwork-links">

@@ -5,6 +5,11 @@ Scenario: Create study session
   When a study session is started
   Then the study session is created
 
+Scenario: Create study session from selected artwork
+  Given multiple artworks exist
+  When the user starts a study session from one artwork
+  Then the study session is created for the selected artwork
+
 Scenario: Add observation
   Given a study session exists
   When the user records an observation

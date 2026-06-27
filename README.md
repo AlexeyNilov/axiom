@@ -92,7 +92,7 @@ Presentation code.
 * `package.json` - TypeScript and Vitest scripts for the Phase 1 implementation.
 * `prisma/schema.prisma` - SQLite persistence schema for the explicit workflow
   relationships.
-* `prisma/seed.mjs` - seeds the starter artwork, Kandinsky's Composition VIII.
+* `prisma/seed.mjs` - seeds starter artworks for the study picker.
 * `tsconfig.json` - TypeScript compiler configuration.
 * `vitest.config.ts` - Vitest test configuration.
 * `playwright.config.ts` - browser workflow test configuration.
