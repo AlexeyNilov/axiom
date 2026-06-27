@@ -152,6 +152,10 @@ npm run test:e2e
 npm run dev
 ```
 
+`npm test` uses `prisma/test.db` so Prisma integration fixtures do not leak
+into the local development database. App development and e2e tests use
+`prisma/dev.db`.
+
 ---
 
 ## Success Metric

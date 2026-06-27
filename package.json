@@ -1,6 +1,6 @@
 {
   "name": "axiom",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,10 +8,11 @@
     "build": "next build",
     "start": "next start",
     "db:generate": "DATABASE_URL=file:./dev.db prisma generate",
-    "db:push": "node scripts/ensure-sqlite-db.mjs && DATABASE_URL=file:./dev.db prisma db push",
+    "db:push": "DATABASE_URL=file:./dev.db node scripts/ensure-sqlite-db.mjs && DATABASE_URL=file:./dev.db prisma db push",
+    "db:test:push": "DATABASE_URL=file:./test.db node scripts/ensure-sqlite-db.mjs && DATABASE_URL=file:./test.db prisma db push",
     "db:seed": "DATABASE_URL=file:./dev.db node prisma/seed.mjs",
-    "pretest": "npm run db:push",
-    "test": "vitest run",
+    "pretest": "npm run db:test:push",
+    "test": "DATABASE_URL=file:./test.db vitest run",
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit"
   },
