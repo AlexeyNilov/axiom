@@ -1,13 +1,13 @@
-import { Artwork } from "../domain/artwork.js";
-import { Experiment } from "../domain/experiment.js";
-import { Mapping, MappingConfidence } from "../domain/mapping.js";
-import { Principle } from "../domain/principle.js";
-import { Reflection } from "../domain/reflection.js";
-import { SoftwareConcept } from "../domain/software-concept.js";
-import { StudySession } from "../domain/study-session.js";
-import { Clock, EntityId, IdGenerator } from "../domain/types.js";
-import { ApplicationError } from "./errors.js";
-import { UnitOfWork } from "./repositories.js";
+import { Artwork } from "../domain/artwork";
+import { Experiment } from "../domain/experiment";
+import { Mapping, MappingConfidence } from "../domain/mapping";
+import { Principle } from "../domain/principle";
+import { Reflection } from "../domain/reflection";
+import { SoftwareConcept } from "../domain/software-concept";
+import { StudySession } from "../domain/study-session";
+import { Clock, EntityId, IdGenerator } from "../domain/types";
+import { ApplicationError } from "./errors";
+import { UnitOfWork } from "./repositories";
 
 export type ApplicationDependencies = {
   repositories: UnitOfWork;
@@ -19,12 +19,24 @@ export function createApplication(dependencies: ApplicationDependencies) {
   const { repositories, clock, ids } = dependencies;
 
   return {
-    createArtwork(input: {
+    async listArtworks() {
+      return repositories.artworks.list();
+    },
+
+    async getArtwork(input: { artworkId: EntityId }) {
+      return requireEntity(
+        await repositories.artworks.findById(input.artworkId),
+        "Artwork",
+      );
+    },
+
+    async createArtwork(input: {
       title: string;
       artist?: string;
       year?: string;
       movement?: string;
       imageUrl?: string;
+      imagePageUrl?: string;
       sourceUrl?: string;
     }) {
       const artwork = Artwork.create({
@@ -32,12 +44,23 @@ export function createApplication(dependencies: ApplicationDependencies) {
         ...input,
       });
 
-      repositories.artworks.save(artwork);
+      await repositories.artworks.save(artwork);
       return artwork;
     },
 
-    startStudySession(input: { artworkId: EntityId }) {
-      requireEntity(repositories.artworks.findById(input.artworkId), "Artwork");
+    async listStudySessions() {
+      return repositories.studySessions.list();
+    },
+
+    async getStudySession(input: { studySessionId: EntityId }) {
+      return requireEntity(
+        await repositories.studySessions.findById(input.studySessionId),
+        "Study session",
+      );
+    },
+
+    async startStudySession(input: { artworkId: EntityId }) {
+      requireEntity(await repositories.artworks.findById(input.artworkId), "Artwork");
 
       const studySession = StudySession.start({
         id: ids(),
@@ -45,17 +68,17 @@ export function createApplication(dependencies: ApplicationDependencies) {
         startedAt: clock(),
       });
 
-      repositories.studySessions.save(studySession);
+      await repositories.studySessions.save(studySession);
       return studySession;
     },
 
-    recordObservation(input: {
+    async recordObservation(input: {
       studySessionId: EntityId;
       text: string;
       tags?: string[];
     }) {
       const studySession = requireEntity(
-        repositories.studySessions.findById(input.studySessionId),
+        await repositories.studySessions.findById(input.studySessionId),
         "Study session",
       );
       const observation = studySession.recordObservation({
@@ -64,25 +87,32 @@ export function createApplication(dependencies: ApplicationDependencies) {
         tags: input.tags,
       });
 
-      repositories.studySessions.save(studySession);
-      repositories.observations.save(observation);
+      await repositories.studySessions.save(studySession);
+      await repositories.observations.save(observation);
       return observation;
     },
 
-    completeStudySession(input: { studySessionId: EntityId }) {
+    async listObservations() {
+      return repositories.observations.list();
+    },
+
+    async completeStudySession(input: { studySessionId: EntityId }) {
       const studySession = requireEntity(
-        repositories.studySessions.findById(input.studySessionId),
+        await repositories.studySessions.findById(input.studySessionId),
         "Study session",
       );
 
       studySession.complete(clock());
-      repositories.studySessions.save(studySession);
+      await repositories.studySessions.save(studySession);
       return studySession;
     },
 
-    derivePrinciple(input: { text: string; observationIds: EntityId[] }) {
+    async derivePrinciple(input: { text: string; observationIds: EntityId[] }) {
       for (const observationId of input.observationIds) {
-        requireEntity(repositories.observations.findById(observationId), "Observation");
+        requireEntity(
+          await repositories.observations.findById(observationId),
+          "Observation",
+        );
       }
 
       const principle = Principle.create({
@@ -91,30 +121,41 @@ export function createApplication(dependencies: ApplicationDependencies) {
         observationIds: input.observationIds,
       });
 
-      repositories.principles.save(principle);
+      await repositories.principles.save(principle);
       return principle;
     },
 
-    createSoftwareConcept(input: { name: string }) {
+    async listPrinciples() {
+      return repositories.principles.list();
+    },
+
+    async createSoftwareConcept(input: { name: string }) {
       const concept = SoftwareConcept.create({
         id: ids(),
         name: input.name,
       });
 
-      repositories.softwareConcepts.save(concept);
+      await repositories.softwareConcepts.save(concept);
       return concept;
     },
 
-    mapPrincipleToSoftwareConcept(input: {
+    async listSoftwareConcepts() {
+      return repositories.softwareConcepts.list();
+    },
+
+    async mapPrincipleToSoftwareConcept(input: {
       principleId: EntityId;
       softwareConceptId: EntityId;
       rationale: string;
       confidence: MappingConfidence;
       notes?: string;
     }) {
-      requireEntity(repositories.principles.findById(input.principleId), "Principle");
       requireEntity(
-        repositories.softwareConcepts.findById(input.softwareConceptId),
+        await repositories.principles.findById(input.principleId),
+        "Principle",
+      );
+      requireEntity(
+        await repositories.softwareConcepts.findById(input.softwareConceptId),
         "Software concept",
       );
 
@@ -123,34 +164,42 @@ export function createApplication(dependencies: ApplicationDependencies) {
         ...input,
       });
 
-      repositories.mappings.save(mapping);
+      await repositories.mappings.save(mapping);
       return mapping;
     },
 
-    createExperiment(input: {
+    async listMappings() {
+      return repositories.mappings.list();
+    },
+
+    async createExperiment(input: {
       mappingId: EntityId;
       hypothesis: string;
       task: string;
       expectedOutcome: string;
     }) {
-      requireEntity(repositories.mappings.findById(input.mappingId), "Mapping");
+      requireEntity(await repositories.mappings.findById(input.mappingId), "Mapping");
 
       const experiment = Experiment.create({
         id: ids(),
         ...input,
       });
 
-      repositories.experiments.save(experiment);
+      await repositories.experiments.save(experiment);
       return experiment;
     },
 
-    recordExperimentOutcome(input: {
+    async listExperiments() {
+      return repositories.experiments.list();
+    },
+
+    async recordExperimentOutcome(input: {
       experimentId: EntityId;
       actualOutcome: string;
       reflectionText: string;
     }) {
       const experiment = requireEntity(
-        repositories.experiments.findById(input.experimentId),
+        await repositories.experiments.findById(input.experimentId),
         "Experiment",
       );
 
@@ -165,9 +214,13 @@ export function createApplication(dependencies: ApplicationDependencies) {
         createdAt: clock(),
       });
 
-      repositories.experiments.save(experiment);
-      repositories.reflections.save(reflection);
+      await repositories.experiments.save(experiment);
+      await repositories.reflections.save(reflection);
       return { updatedExperiment: experiment, reflection };
+    },
+
+    async listReflections() {
+      return repositories.reflections.list();
     },
   };
 }

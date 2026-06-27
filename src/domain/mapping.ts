@@ -1,4 +1,4 @@
-import { EntityId, requireNonEmptyText } from "./types.js";
+import { EntityId, requireNonEmptyText } from "./types";
 
 export type MappingConfidence = "low" | "medium" | "high";
 

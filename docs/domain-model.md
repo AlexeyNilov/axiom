@@ -13,8 +13,9 @@ Fields
 * artist
 * year
 * movement
-* imageUrl
-* sourceUrl
+* imageUrl - direct renderable image media
+* imagePageUrl - image reference page
+* sourceUrl - authoritative artwork record
 
 ---
 

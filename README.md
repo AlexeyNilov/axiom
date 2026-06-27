@@ -77,10 +77,10 @@ Everything should remain simple and explicit.
 
 ## Repository Map
 
-This repository now contains the initial Phase 1 TypeScript implementation for
-the core study workflow. The implementation is intentionally limited to Domain,
-Application and in-memory Infrastructure code; no UI or database persistence has
-been introduced yet.
+This repository now contains a persisted, workflow-first MVP shell for the core
+study workflow. The implementation keeps business rules in Domain, orchestration
+in Application, persistence behind repository interfaces and UI in Next.js
+Presentation code.
 
 ### Root
 
@@ -90,8 +90,12 @@ been introduced yet.
   Playwright stack.
 * `LICENSE` - project license.
 * `package.json` - TypeScript and Vitest scripts for the Phase 1 implementation.
+* `prisma/schema.prisma` - SQLite persistence schema for the explicit workflow
+  relationships.
+* `prisma/seed.mjs` - seeds the starter artwork, Kandinsky's Composition VIII.
 * `tsconfig.json` - TypeScript compiler configuration.
 * `vitest.config.ts` - Vitest test configuration.
+* `playwright.config.ts` - browser workflow test configuration.
 
 ### Documentation
 
@@ -122,22 +126,30 @@ Code follows the documented layer order:
 
 1. `src/domain` - entities, value objects and business rules.
 2. `src/application` - use cases, repository contracts and orchestration.
-3. `src/infrastructure/memory` - in-memory repository implementations for
-   tests and early development.
-4. `tests/domain` - focused domain rule tests.
-5. `tests/application` - vertical application workflow tests.
+3. `src/infrastructure/memory` - in-memory repository implementations for fast
+   application tests.
+4. `src/infrastructure/prisma` - Prisma-backed repository implementations.
+5. `app` - Next.js routes, server actions and workflow-first presentation.
+6. `tests/domain` - focused domain rule tests.
+7. `tests/application` - vertical application workflow tests.
+8. `tests/infrastructure` - Prisma persistence tests.
+9. `tests/e2e` - browser workflow tests.
 
 Planned later layers:
 
-1. `Infrastructure` persistence with Prisma.
-2. `Presentation` with Next.js routes, React components and user interaction.
-3. Integration tests for browser and persistence behavior.
+1. Search and filtering behavior.
+2. Knowledge graph visualization.
+3. AI adapters for assistive suggestions.
 
 ### Commands
 
 ```bash
+npm run db:push
+npm run db:seed
 npm run typecheck
 npm test
+npm run test:e2e
+npm run dev
 ```
 
 ---

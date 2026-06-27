@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { DomainError } from "../../src/domain/errors.js";
-import { StudySession } from "../../src/domain/study-session.js";
+import { DomainError } from "../../src/domain/errors";
+import { StudySession } from "../../src/domain/study-session";
 
 describe("StudySession", () => {
   it("records observations as user-authored claims owned by the study session", () => {

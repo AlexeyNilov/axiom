@@ -20,14 +20,31 @@ Scope:
 - Application use cases with in-memory repositories.
 - Vitest coverage for domain rules and the Phase 1 study workflow.
 
-Deferred:
+Delivered later in Phase 1.5:
 
 - Presentation/UI.
 - Database persistence.
+
+Deferred:
+
 - Search implementation beyond repository-held reflection text.
 - Knowledge graph visualization.
 - Tags/filtering UI.
 - AI assistance.
+
+## Phase 1.5
+
+Status: implemented as a persisted workflow-first MVP shell.
+
+Scope:
+
+- Prisma persistence over SQLite behind repository interfaces.
+- Seeded starter artwork: Wassily Kandinsky, Composition VIII.
+- Clean artwork media fields:
+  renderable image URL, image page URL and source record URL remain distinct.
+- Next.js presentation for the guided workflow instead of generic CRUD screens.
+- Server actions call Application use cases; UI does not import Prisma directly.
+- Playwright happy-path coverage for the traceable study workflow.
 
 ---
 

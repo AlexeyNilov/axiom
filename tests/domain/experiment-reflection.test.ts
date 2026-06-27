@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { DomainError } from "../../src/domain/errors.js";
-import { Experiment } from "../../src/domain/experiment.js";
-import { Reflection } from "../../src/domain/reflection.js";
+import { DomainError } from "../../src/domain/errors";
+import { Experiment } from "../../src/domain/experiment";
+import { Reflection } from "../../src/domain/reflection";
 
 describe("Experiment and reflection rules", () => {
   it("keeps hypothesis, task, expected outcome, actual outcome, and status distinct", () => {

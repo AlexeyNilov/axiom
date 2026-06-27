@@ -43,7 +43,9 @@ Backend
 - Next.js
 
 Database
-- SQLite?
+- SQLite for local-first MVP persistence.
+- PostgreSQL remains a later migration option through Prisma and repository
+  interfaces.
 
 ORM
 - Prisma

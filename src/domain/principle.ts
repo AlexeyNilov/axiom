@@ -1,5 +1,5 @@
-import { DomainError } from "./errors.js";
-import { EntityId, requireNonEmptyText } from "./types.js";
+import { DomainError } from "./errors";
+import { EntityId, requireNonEmptyText } from "./types";
 
 export type PrincipleProps = {
   id: EntityId;

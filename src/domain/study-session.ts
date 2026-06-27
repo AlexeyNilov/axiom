@@ -1,6 +1,6 @@
-import { DomainError } from "./errors.js";
-import { Observation, ObservationProps } from "./observation.js";
-import { EntityId, requireNonEmptyText } from "./types.js";
+import { DomainError } from "./errors";
+import { Observation, ObservationProps } from "./observation";
+import { EntityId, requireNonEmptyText } from "./types";
 
 export type StartStudySessionProps = {
   id: EntityId;

@@ -1,18 +1,18 @@
-import { Repository } from "../../application/repositories.js";
-import { EntityId } from "../../domain/types.js";
+import { Repository } from "../../application/repositories";
+import { EntityId } from "../../domain/types";
 
 export class InMemoryRepository<T extends { id: EntityId }> implements Repository<T> {
   private readonly records = new Map<EntityId, T>();
 
-  save(entity: T): void {
+  async save(entity: T): Promise<void> {
     this.records.set(entity.id, entity);
   }
 
-  findById(id: EntityId): T | undefined {
+  async findById(id: EntityId): Promise<T | undefined> {
     return this.records.get(id);
   }
 
-  list(): T[] {
+  async list(): Promise<T[]> {
     return [...this.records.values()];
   }
 }

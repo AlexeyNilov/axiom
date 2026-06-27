@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { DomainError } from "../../src/domain/errors.js";
-import { Mapping } from "../../src/domain/mapping.js";
-import { Principle } from "../../src/domain/principle.js";
-import { SoftwareConcept } from "../../src/domain/software-concept.js";
+import { DomainError } from "../../src/domain/errors";
+import { Mapping } from "../../src/domain/mapping";
+import { Principle } from "../../src/domain/principle";
+import { SoftwareConcept } from "../../src/domain/software-concept";
 
 describe("Principle and mapping rules", () => {
   it("requires every principle to reference at least one observation", () => {

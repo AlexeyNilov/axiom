@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { createApplication } from "../../src/application/create-application.js";
-import { ApplicationError } from "../../src/application/errors.js";
-import { InMemoryUnitOfWork } from "../../src/infrastructure/memory/in-memory-unit-of-work.js";
+import { createApplication } from "../../src/application/create-application";
+import { ApplicationError } from "../../src/application/errors";
+import { InMemoryUnitOfWork } from "../../src/infrastructure/memory/in-memory-unit-of-work";
 
 describe("Phase 1 study workflow", () => {
-  it("keeps artwork study knowledge traceable across the core workflow", () => {
+  it("keeps artwork study knowledge traceable across the core workflow", async () => {
     const app = createApplication({
       repositories: new InMemoryUnitOfWork(),
       clock: () => new Date("2026-06-27T10:00:00.000Z"),
@@ -20,37 +20,37 @@ describe("Phase 1 study workflow", () => {
       ]),
     });
 
-    const artwork = app.createArtwork({
+    const artwork = await app.createArtwork({
       title: "Composition With Red, Blue and Yellow",
       artist: "Piet Mondrian",
       year: "1930",
     });
-    const session = app.startStudySession({ artworkId: artwork.id });
-    const observation = app.recordObservation({
+    const session = await app.startStudySession({ artworkId: artwork.id });
+    const observation = await app.recordObservation({
       studySessionId: session.id,
       text: "Primary color blocks are separated by black lines.",
       tags: ["composition"],
     });
-    const principle = app.derivePrinciple({
+    const principle = await app.derivePrinciple({
       text: "Boundaries clarify relationships between parts.",
       observationIds: [observation.id],
     });
-    const concept = app.createSoftwareConcept({ name: "Module Boundaries" });
-    const mapping = app.mapPrincipleToSoftwareConcept({
+    const concept = await app.createSoftwareConcept({ name: "Module Boundaries" });
+    const mapping = await app.mapPrincipleToSoftwareConcept({
       principleId: principle.id,
       softwareConceptId: concept.id,
       rationale:
         "Explicit module boundaries make dependency relationships easier to reason about.",
       confidence: "high",
     });
-    const experiment = app.createExperiment({
+    const experiment = await app.createExperiment({
       mappingId: mapping.id,
       hypothesis:
         "If module boundaries are explicit, onboarding developers will trace dependencies faster.",
       task: "Split the payment package into ports, adapters, and domain modules.",
       expectedOutcome: "A developer can identify allowed dependency direction in one pass.",
     });
-    const { updatedExperiment, reflection } = app.recordExperimentOutcome({
+    const { updatedExperiment, reflection } = await app.recordExperimentOutcome({
       experimentId: experiment.id,
       actualOutcome:
         "Dependency direction became obvious, but package names need clearer verbs.",
@@ -64,31 +64,31 @@ describe("Phase 1 study workflow", () => {
     expect(mapping.principleId).toBe(principle.id);
   });
 
-  it("does not start a study session for missing artwork", () => {
+  it("does not start a study session for missing artwork", async () => {
     const app = createApplication({
       repositories: new InMemoryUnitOfWork(),
       clock: () => new Date("2026-06-27T10:00:00.000Z"),
       ids: sequentialIds(["session-1"]),
     });
 
-    expect(() => app.startStudySession({ artworkId: "missing-artwork" })).toThrow(
-      ApplicationError,
-    );
+    await expect(
+      app.startStudySession({ artworkId: "missing-artwork" }),
+    ).rejects.toThrow(ApplicationError);
   });
 
-  it("requires derived principles to reference existing observations", () => {
+  it("requires derived principles to reference existing observations", async () => {
     const app = createApplication({
       repositories: new InMemoryUnitOfWork(),
       clock: () => new Date("2026-06-27T10:00:00.000Z"),
       ids: sequentialIds(["principle-1"]),
     });
 
-    expect(() =>
+    await expect(
       app.derivePrinciple({
         text: "Hierarchy emerges from contrast.",
         observationIds: ["missing-observation"],
       }),
-    ).toThrow(ApplicationError);
+    ).rejects.toThrow(ApplicationError);
   });
 });
 

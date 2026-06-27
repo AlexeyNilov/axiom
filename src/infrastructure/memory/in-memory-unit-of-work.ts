@@ -1,13 +1,13 @@
-import { UnitOfWork } from "../../application/repositories.js";
-import { Artwork } from "../../domain/artwork.js";
-import { Experiment } from "../../domain/experiment.js";
-import { Mapping } from "../../domain/mapping.js";
-import { Observation } from "../../domain/observation.js";
-import { Principle } from "../../domain/principle.js";
-import { Reflection } from "../../domain/reflection.js";
-import { SoftwareConcept } from "../../domain/software-concept.js";
-import { StudySession } from "../../domain/study-session.js";
-import { InMemoryRepository } from "./in-memory-repository.js";
+import { UnitOfWork } from "../../application/repositories";
+import { Artwork } from "../../domain/artwork";
+import { Experiment } from "../../domain/experiment";
+import { Mapping } from "../../domain/mapping";
+import { Observation } from "../../domain/observation";
+import { Principle } from "../../domain/principle";
+import { Reflection } from "../../domain/reflection";
+import { SoftwareConcept } from "../../domain/software-concept";
+import { StudySession } from "../../domain/study-session";
+import { InMemoryRepository } from "./in-memory-repository";
 
 export class InMemoryUnitOfWork implements UnitOfWork {
   readonly artworks = new InMemoryRepository<Artwork>();

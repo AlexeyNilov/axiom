@@ -1,4 +1,4 @@
-import { EntityId, requireNonEmptyText } from "./types.js";
+import { EntityId, requireNonEmptyText } from "./types";
 
 export type ArtworkProps = {
   id: EntityId;
@@ -7,6 +7,7 @@ export type ArtworkProps = {
   year?: string;
   movement?: string;
   imageUrl?: string;
+  imagePageUrl?: string;
   sourceUrl?: string;
 };
 
@@ -18,6 +19,7 @@ export class Artwork {
     readonly year?: string,
     readonly movement?: string,
     readonly imageUrl?: string,
+    readonly imagePageUrl?: string,
     readonly sourceUrl?: string,
   ) {}
 
@@ -29,6 +31,7 @@ export class Artwork {
       props.year?.trim(),
       props.movement?.trim(),
       props.imageUrl?.trim(),
+      props.imagePageUrl?.trim(),
       props.sourceUrl?.trim(),
     );
   }

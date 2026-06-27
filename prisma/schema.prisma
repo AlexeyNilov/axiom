@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Artwork {
+  id           String         @id
+  title        String
+  artist       String?
+  year         String?
+  movement     String?
+  imageUrl     String?
+  imagePageUrl String?
+  sourceUrl    String?
+  sessions     StudySession[]
+}
+
+model StudySession {
+  id           String        @id
+  artworkId    String
+  startedAt    DateTime
+  completedAt  DateTime?
+  artwork      Artwork       @relation(fields: [artworkId], references: [id])
+  observations Observation[]
+}
+
+model Observation {
+  id             String                 @id
+  studySessionId String
+  text           String
+  tagsJson       String                 @default("[]")
+  studySession   StudySession           @relation(fields: [studySessionId], references: [id])
+  principles     PrincipleObservation[]
+}
+
+model Principle {
+  id           String                 @id
+  text         String
+  observations PrincipleObservation[]
+  mappings     Mapping[]
+}
+
+model PrincipleObservation {
+  principleId   String
+  observationId String
+  principle     Principle   @relation(fields: [principleId], references: [id], onDelete: Cascade)
+  observation   Observation @relation(fields: [observationId], references: [id], onDelete: Restrict)
+
+  @@id([principleId, observationId])
+}
+
+model SoftwareConcept {
+  id       String    @id
+  name     String
+  mappings Mapping[]
+}
+
+model Mapping {
+  id                String          @id
+  principleId       String
+  softwareConceptId String
+  rationale         String
+  confidence        String
+  notes             String?
+  principle         Principle       @relation(fields: [principleId], references: [id])
+  softwareConcept   SoftwareConcept @relation(fields: [softwareConceptId], references: [id])
+  experiments       Experiment[]
+}
+
+model Experiment {
+  id              String       @id
+  mappingId       String
+  hypothesis      String
+  task            String
+  expectedOutcome String
+  actualOutcome   String?
+  status          String
+  mapping         Mapping      @relation(fields: [mappingId], references: [id])
+  reflections     Reflection[]
+}
+
+model Reflection {
+  id           String     @id
+  experimentId String
+  text         String
+  createdAt    DateTime
+  experiment   Experiment @relation(fields: [experimentId], references: [id])
+}
