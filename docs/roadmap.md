@@ -2,13 +2,32 @@
 
 ## Phase 1
 
-Core domain
+Status: implemented as a tested Domain/Application slice.
 
-Study sessions
+Scope:
 
-CRUD
+- Core domain entities for the workflow:
+  Artwork -> Observation -> Principle -> Software Concept -> Experiment -> Reflection.
+- Study session lifecycle:
+  start session, record observations, complete session.
+- Traceability rules:
+  principles reference observations, mappings connect one principle to one
+  software concept, reflections link to experiments.
+- Domain constraints:
+  completed study sessions are read-only, principles require observations,
+  mappings require rationale, experiments keep hypothesis, task, expected
+  outcome, actual outcome and status distinct.
+- Application use cases with in-memory repositories.
+- Vitest coverage for domain rules and the Phase 1 study workflow.
 
-Tests
+Deferred:
+
+- Presentation/UI.
+- Database persistence.
+- Search implementation beyond repository-held reflection text.
+- Knowledge graph visualization.
+- Tags/filtering UI.
+- AI assistance.
 
 ---
 

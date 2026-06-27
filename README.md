@@ -77,8 +77,10 @@ Everything should remain simple and explicit.
 
 ## Repository Map
 
-This repository is currently specification-first. The application scaffold has
-not been initialized yet.
+This repository now contains the initial Phase 1 TypeScript implementation for
+the core study workflow. The implementation is intentionally limited to Domain,
+Application and in-memory Infrastructure code; no UI or database persistence has
+been introduced yet.
 
 ### Root
 
@@ -87,6 +89,9 @@ not been initialized yet.
 * `.gitignore` - ignore rules for the intended Next.js, TypeScript, Prisma and
   Playwright stack.
 * `LICENSE` - project license.
+* `package.json` - TypeScript and Vitest scripts for the Phase 1 implementation.
+* `tsconfig.json` - TypeScript compiler configuration.
+* `vitest.config.ts` - Vitest test configuration.
 
 ### Documentation
 
@@ -111,16 +116,29 @@ not been initialized yet.
 * `specs/experiment.feature` - experiment creation and outcome/reflection
   behavior.
 
-### Planned Application Structure
+### Application Structure
 
-When implementation begins, code should follow the documented layer order:
+Code follows the documented layer order:
 
-1. `Domain` - entities, value objects and business rules.
-2. `Application` - use cases and orchestration.
-3. `Infrastructure` - repositories, Prisma persistence, external services and
-   AI adapters.
-4. `Presentation` - Next.js routes, React components and user interaction.
-5. `Integration tests` - vertical behavior across layers.
+1. `src/domain` - entities, value objects and business rules.
+2. `src/application` - use cases, repository contracts and orchestration.
+3. `src/infrastructure/memory` - in-memory repository implementations for
+   tests and early development.
+4. `tests/domain` - focused domain rule tests.
+5. `tests/application` - vertical application workflow tests.
+
+Planned later layers:
+
+1. `Infrastructure` persistence with Prisma.
+2. `Presentation` with Next.js routes, React components and user interaction.
+3. Integration tests for browser and persistence behavior.
+
+### Commands
+
+```bash
+npm run typecheck
+npm test
+```
 
 ---
 

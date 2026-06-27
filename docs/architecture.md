@@ -40,10 +40,10 @@ Frontend
 - TypeScript
 
 Backend
-- Next.js API or FastAPI
+- Next.js
 
 Database
-- PostgreSQL
+- SQLite?
 
 ORM
 - Prisma
