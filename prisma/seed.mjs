@@ -35,7 +35,7 @@ const artworks = [
     year: "1889",
     movement: "Post-Impressionism",
     imageUrl:
-      "https://commons.wikimedia.org/wiki/Special:FilePath/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
     imagePageUrl:
       "https://commons.wikimedia.org/wiki/File:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
     sourceUrl: "https://www.moma.org/collection/works/79802",

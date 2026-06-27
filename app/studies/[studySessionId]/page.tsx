@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   completeStudySessionAction,
   createExperimentAction,
@@ -40,6 +41,9 @@ export default async function StudyPage({ params }: PageProps) {
       <aside className="artwork-reference" data-testid="artwork-reference">
         <div className="artwork-reference-inner">
           <div className="stack">
+            <Link className="context-link" href="/">
+              Back to studies
+            </Link>
             <p className="kicker">Active study</p>
             <h1>{artwork.title}</h1>
             <p className="meta">

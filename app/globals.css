@@ -84,24 +84,7 @@ label {
 .shell {
   width: min(1720px, calc(100vw - 2rem));
   margin: 0 auto;
-  padding: 2rem 0 4rem;
-}
-
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  border-bottom: 1px solid var(--line);
-  padding: 1rem 0;
-}
-
-.brand {
-  color: var(--ink);
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  text-decoration: none;
+  padding: 1rem 0 4rem;
 }
 
 .hero,
@@ -194,6 +177,15 @@ label {
   flex-wrap: wrap;
   gap: 0.75rem;
   font-size: 0.95rem;
+}
+
+.context-link {
+  width: fit-content;
+  color: var(--accent-dark);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
 .kicker {
@@ -320,8 +312,7 @@ p {
     max-height: none;
   }
 
-  .section-header,
-  .topbar {
+  .section-header {
     align-items: flex-start;
     flex-direction: column;
   }
