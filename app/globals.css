@@ -82,7 +82,7 @@ label {
 }
 
 .shell {
-  width: min(1180px, calc(100vw - 2rem));
+  width: min(1720px, calc(100vw - 2rem));
   margin: 0 auto;
   padding: 2rem 0 4rem;
 }
@@ -118,12 +118,52 @@ label {
   align-items: start;
 }
 
+.study-layout {
+  display: grid;
+  grid-template-columns: minmax(420px, 44vw) minmax(560px, 1fr);
+  gap: 2rem;
+  align-items: start;
+  padding-top: 1.5rem;
+}
+
+.study-flow {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.artwork-reference {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  max-height: calc(100vh - 2rem);
+  min-width: 0;
+}
+
+.artwork-reference-inner {
+  display: grid;
+  gap: 1rem;
+  max-height: calc(100vh - 2rem);
+  min-height: 0;
+}
+
 .artwork-image {
   width: 100%;
   aspect-ratio: 4 / 3;
   border: 1px solid var(--line);
   object-fit: contain;
   background: #ecefeb;
+}
+
+.artwork-reference-image {
+  max-height: min(72vh, 820px);
+}
+
+.artwork-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.95rem;
 }
 
 .kicker {
@@ -237,8 +277,18 @@ p {
 
 @media (max-width: 760px) {
   .artwork-header,
+  .study-layout,
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  .artwork-reference {
+    position: static;
+    max-height: none;
+  }
+
+  .artwork-reference-inner {
+    max-height: none;
   }
 
   .section-header,

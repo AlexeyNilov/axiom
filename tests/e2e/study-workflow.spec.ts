@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("studies the seeded artwork through the traceable workflow", async ({ page }) => {
+  await page.setViewportSize({ width: 1680, height: 980 });
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: "Composition VIII" })).toBeVisible();
@@ -57,4 +58,8 @@ test("studies the seeded artwork through the traceable workflow", async ({ page 
   await expect(
     page.getByRole("article").filter({ hasText: "Decentralized coherence" }),
   ).toBeVisible();
+
+  await page.getByRole("heading", { name: "Reflections" }).scrollIntoViewIfNeeded();
+  await expect(page.getByTestId("artwork-reference")).toBeInViewport();
+  await expect(page.getByRole("heading", { name: "Composition VIII" })).toBeInViewport();
 });
